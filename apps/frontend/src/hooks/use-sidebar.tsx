@@ -2,13 +2,13 @@ import { usePathname } from "next/navigation";
 import { SidebarIcons } from "@/components/icons/sidebar";
 import { cn } from "@/lib/utils";
 
-const useSidebar = () => {
+export function useSidebar() {
     const pathname = usePathname();
 
     const navigation = [
         {
             label: "Egzaminy",
-            path: "wydarzenia",
+            path: "/wydarzenia",
             icon: (
                 <SidebarIcons.chart
                     className={cn(
@@ -23,7 +23,7 @@ const useSidebar = () => {
         },
         {
             label: "Baza Wiedzy",
-            path: "bazawiedzy",
+            path: "/bazawiedzy",
             icon: (
                 <SidebarIcons.comment
                     className={cn(
@@ -38,7 +38,7 @@ const useSidebar = () => {
         },
         {
             label: "Tabela wyników",
-            path: "tabelawynikow",
+            path: "/tabelawynikow",
             icon: (
                 <SidebarIcons.scoreboard
                     className={cn(
@@ -71,6 +71,4 @@ const useSidebar = () => {
     };
 
     return { navigation, account };
-};
-
-export default useSidebar;
+}

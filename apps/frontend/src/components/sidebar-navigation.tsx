@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
-import useSidebar from "@/hooks/use-sidebar";
+import { useSidebar } from "@/hooks/use-sidebar";
 
 const SidebarNavigation = () => {
   const pathname = usePathname();

@@ -22,7 +22,11 @@ const Sidebar = () => {
                             Skontaktuj się z nami?
                         </p>
                     </div>
-                    <Button variant="secondary" className="z-10">
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        className="z-10 px-10"
+                    >
                         Kontakt
                     </Button>
                     <SidebarIcons.bannerBlob className="absolute -top-28 -right-16" />
