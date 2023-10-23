@@ -83,7 +83,7 @@ const SidebarNavigation = () => {
                     </AnimatePresence>
                 </Link>
             ))}
-            <Separator className="-z-10" />
+            {/* <Separator className="-z-10" />
             <Link
                 ref={(el) => (buttonRefs[account.index] = el)}
                 href={account.path}
@@ -163,7 +163,7 @@ const SidebarNavigation = () => {
                         </DialogFooter>
                     </DialogHeader>
                 </DialogContent>
-            </Dialog>
+            </Dialog> */}
             <AnimatePresence>
                 {hoveredRect && navRect && (
                     <motion.div

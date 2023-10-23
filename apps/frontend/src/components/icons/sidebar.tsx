@@ -1,7 +1,7 @@
 type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const SidebarIcons = {
-    events: (props: IconProps) => (
+    chart: (props: IconProps) => (
         <svg
             width="26"
             height="26"
@@ -33,7 +33,7 @@ export const SidebarIcons = {
             </g>
         </svg>
     ),
-    knowledgeBase: (props: IconProps) => (
+    comment: (props: IconProps) => (
         <svg
             width="26"
             height="26"

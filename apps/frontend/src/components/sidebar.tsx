@@ -7,7 +7,7 @@ const Sidebar = () => {
         <div className="flex flex-col max-w-[275px] w-full border-r border-gray-100">
             <div className="flex justify-center mt-7 pb-[15px]">
                 <p className="font-dm-sans text-gray-700 text-[15px] font-bold leading-snug">
-                    Mistrzostwa Mechaników
+                    Egzaminy
                 </p>
             </div>
             <SidebarNavigation />

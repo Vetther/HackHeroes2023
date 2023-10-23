@@ -7,10 +7,10 @@ const useSidebar = () => {
 
     const navigation = [
         {
-            label: "Wydarzenia",
+            label: "Egzaminy",
             path: "wydarzenia",
             icon: (
-                <SidebarIcons.events
+                <SidebarIcons.chart
                     className={cn(
                         "transition-colors duration-300",
                         pathname === "/wydarzenia"
@@ -25,7 +25,7 @@ const useSidebar = () => {
             label: "Baza Wiedzy",
             path: "bazawiedzy",
             icon: (
-                <SidebarIcons.knowledgeBase
+                <SidebarIcons.comment
                     className={cn(
                         "transition-colors duration-300",
                         pathname === "/bazawiedzy"
@@ -50,21 +50,6 @@ const useSidebar = () => {
                 />
             ),
             active: pathname === "/tabelawynikow",
-        },
-        {
-            label: "Aktualności",
-            path: "aktualnosci",
-            icon: (
-                <SidebarIcons.news
-                    className={cn(
-                        "transition-colors duration-300",
-                        pathname === "/aktualnosci"
-                            ? "text-white"
-                            : "text-slate-500 group-hover:text-indigo-500"
-                    )}
-                />
-            ),
-            active: pathname === "/aktualnosci",
         },
     ];
 
