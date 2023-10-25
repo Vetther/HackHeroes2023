@@ -17,7 +17,7 @@ export default function Navbar() {
         });
 
     return (
-        <nav className="inline-flex w-full items-center justify-between">
+        <nav className="inline-flex w-full items-center justify-between px-8 pt-5">
             <div className="inline-flex shrink grow basis-0 flex-col">
                 <Breadcrumbs
                     items={[
