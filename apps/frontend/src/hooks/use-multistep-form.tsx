@@ -11,6 +11,7 @@ export function useMultistepForm(steps: React.ReactElement[]) {
         });
         setLastMaxStepIndex((i) => {
             if (i >= steps.length - 1) return i;
+            if (currentStepIndex < lastMaxStepIndex) return i;
             return i + 1;
         });
     }
