@@ -1,6 +1,6 @@
-import { usePathname } from "next/navigation";
 import { SidebarIcons } from "@/components/icons/sidebar";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export function useSidebar() {
     const pathname = usePathname();
@@ -8,18 +8,18 @@ export function useSidebar() {
     const navigation = [
         {
             label: "Egzaminy",
-            path: "/wydarzenia",
+            path: "/egzaminy",
             icon: (
                 <SidebarIcons.chart
                     className={cn(
                         "transition-colors duration-300",
-                        pathname === "/wydarzenia"
+                        pathname === "/egzaminy"
                             ? "text-white"
                             : "text-slate-500 group-hover:text-indigo-500"
                     )}
                 />
             ),
-            active: pathname === "/wydarzenia",
+            active: pathname === "/egzaminy",
         },
         {
             label: "Baza Wiedzy",
