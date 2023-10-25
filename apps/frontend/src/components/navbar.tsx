@@ -13,7 +13,7 @@ export default function Navbar() {
         .filter((item) => item)
         .map((item, index, array) => {
             const href = `/${array.slice(0, index + 1).join("/")}`;
-            return { label: item, href };
+            return { label: item.replace("-", " "), href };
         });
 
     return (
