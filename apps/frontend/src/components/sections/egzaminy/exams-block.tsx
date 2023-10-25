@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export const ExamsBlock = () => {
     return (
-        <div className="inline-flex h-full flex-col items-start justify-between">
+        <div className="inline-flex h-full flex-col items-start gap-8">
             <div className="flex w-[420px] flex-col items-start justify-start gap-8 rounded-lg bg-white p-11 shadow">
                 <div className="flex flex-col items-start justify-start gap-1">
                     <div className="text-sm font-medium leading-[21px] text-slate-500">
