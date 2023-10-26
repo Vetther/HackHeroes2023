@@ -1,3 +1,5 @@
+"use client";
+
 import { Question } from "@/types";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import {
@@ -52,7 +54,7 @@ const ExamForm = ({
                                         className={cn(
                                             "flex justify-center items-center rounded-lg w-full px-11 py-7 bg-white ring-1 ring-gray-100 cursor-pointer select-none",
                                             selectedAnswer === answer.label &&
-                                                "ring-2 ring-indigo-500"
+                                                "ring-2 ring-indigo-500 bg-indigo-50 transition-all duration-150"
                                         )}
                                         onClick={async () => {
                                             setSelectedAnswer(answer.label);

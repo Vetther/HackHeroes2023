@@ -23,7 +23,8 @@ export function useMultistepForm(steps: React.ReactElement[]) {
         });
     }
 
-    function goTo(index: number) {
+    function goTo(index: number, force?: boolean) {
+        if (force) return setCurrentStepIndex(index);
         if (index > lastMaxStepIndex) {
             setCurrentStepIndex(currentStepIndex);
         } else {
