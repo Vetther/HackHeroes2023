@@ -4,21 +4,21 @@ import { Button } from "./ui/button";
 
 const Sidebar = () => {
     return (
-        <div className="flex flex-col max-w-[275px] w-full border-r border-gray-100">
-            <div className="flex justify-center mt-7 pb-[15px]">
-                <p className="font-dm-sans text-gray-700 text-[15px] font-bold leading-snug">
+        <div className="z-10 flex w-full max-w-[275px] flex-col border-r border-gray-100 bg-white">
+            <div className="mt-7 flex justify-center pb-[15px]">
+                <p className="font-dm-sans text-[15px] font-bold leading-snug text-gray-700">
                     Egzaminy
                 </p>
             </div>
             <SidebarNavigation />
             <div className="px-8 pb-24">
-                <div className="relative flex flex-col items-center bg-indigo-500 h-[200px] w-full rounded-lg justify-between py-6 overflow-hidden">
-                    <div className="flex flex-col gap-2 items-center">
+                <div className="relative flex h-[200px] w-full flex-col items-center justify-between overflow-hidden rounded-lg bg-indigo-500 py-6">
+                    <div className="flex flex-col items-center gap-2">
                         <SidebarIcons.banner />
-                        <p className="text-white text-xs font-dm-sans font-medium leading-none">
+                        <p className="font-dm-sans text-xs font-medium leading-none text-white">
                             Potrzebujesz pomocy?
                         </p>
-                        <p className="text-white opacity-80 text-xs font-dm-sans font-medium leading-none">
+                        <p className="font-dm-sans text-xs font-medium leading-none text-white opacity-80">
                             Skontaktuj się z nami?
                         </p>
                     </div>
@@ -29,7 +29,7 @@ const Sidebar = () => {
                     >
                         Kontakt
                     </Button>
-                    <SidebarIcons.bannerBlob className="absolute -top-28 -right-16" />
+                    <SidebarIcons.bannerBlob className="absolute -right-16 -top-28" />
                     <SidebarIcons.bannerBlob2 className="absolute -bottom-36 -left-40" />
                 </div>
             </div>

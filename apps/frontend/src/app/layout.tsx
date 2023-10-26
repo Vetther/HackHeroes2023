@@ -1,7 +1,6 @@
 import { DM_Sans } from "next/font/google";
 
 import "./globals.css";
-import Sidebar from "@/components/sidebar";
 
 const dm_sans = DM_Sans({
     subsets: ["latin"],
@@ -11,7 +10,7 @@ const dm_sans = DM_Sans({
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <html lang="pl" className={`${dm_sans.variable}`}>
+        <html lang="pl" className={`${dm_sans.className}`}>
             <body>{children}</body>
         </html>
     );
