@@ -1,5 +1,5 @@
-const DashboardShell = ({ children }: {children: React.ReactNode}) => {
-    return <div className="pt-7 px-8">{children}</div>
+const DashboardShell = ({ children }: { children: React.ReactNode }) => {
+  return <div className="h-full px-8 pt-7">{children}</div>
 }
 
-export default DashboardShell;
+export default DashboardShell

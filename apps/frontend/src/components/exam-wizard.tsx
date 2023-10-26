@@ -8,6 +8,7 @@ import { z } from "zod"
 import ExamForm from "./exam-form"
 import { examSchema, panelNextFunctionAtom } from "./exam-panel"
 import { ExamIcons } from "./icons/exam"
+import { Button } from "./ui/button"
 
 const ExamWizard = ({ exam }: { exam: Exam }) => {
   const [panelNextFunction] = useAtom(panelNextFunctionAtom)
