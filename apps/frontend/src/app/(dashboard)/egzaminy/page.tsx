@@ -1,8 +1,8 @@
 import { EgzaminySections } from "@/components/sections/egzaminy";
 
-const ExamPage = ({ params }: { params: { id: string } }) => {
+const ExamPage = () => {
     return (
-        <div className="inline-flex h-full items-start justify-start gap-8">
+        <div className="flex h-full w-full items-start justify-start gap-8">
             <EgzaminySections.ExamsBlock />
             <EgzaminySections.CalendarBlock />
         </div>
