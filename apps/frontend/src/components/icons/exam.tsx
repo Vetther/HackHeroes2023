@@ -10,7 +10,7 @@ export const ExamIcons = {
             xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
-            <path d="M14 15L9 10.5L14 6" stroke="#2D3748" stroke-width="1.5" />
+            <path d="M14 15L9 10.5L14 6" stroke="#2D3748" strokeWidth="1.5" />
         </svg>
     ),
     right: (props: IconProps) => (
@@ -22,7 +22,7 @@ export const ExamIcons = {
             xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
-            <path d="M9 15L14 10.5L9 6" stroke="#2D3748" stroke-width="1.5" />
+            <path d="M9 15L14 10.5L9 6" stroke="#2D3748" strokeWidth="1.5" />
         </svg>
     ),
 };
