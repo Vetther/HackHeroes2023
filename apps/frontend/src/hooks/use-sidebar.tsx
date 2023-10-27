@@ -1,6 +1,6 @@
-import { usePathname } from "next/navigation"
 import { SidebarIcons } from "@/components/icons/sidebar"
 import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 
 export function useSidebar() {
   const pathname = usePathname()
@@ -12,14 +12,14 @@ export function useSidebar() {
       icon: (
         <SidebarIcons.chart
           className={cn(
-            "transition-colors duration-300",
-            pathname === "/egzaminy"
+            "transition-colors duration-150",
+            pathname.split("/")[1] === "egzaminy"
               ? "text-white"
               : "text-slate-500 group-hover:text-indigo-500"
           )}
         />
       ),
-      active: pathname === "/egzaminy",
+      active: pathname.split("/")[1] === "egzaminy",
     },
     {
       label: "Baza Wiedzy",
@@ -27,7 +27,7 @@ export function useSidebar() {
       icon: (
         <SidebarIcons.comment
           className={cn(
-            "transition-colors duration-300",
+            "transition-colors duration-150",
             pathname === "/bazawiedzy"
               ? "text-white"
               : "text-slate-500 group-hover:text-indigo-500"
@@ -42,7 +42,7 @@ export function useSidebar() {
       icon: (
         <SidebarIcons.scoreboard
           className={cn(
-            "transition-colors duration-300",
+            "transition-colors duration-150",
             pathname === "/tabela-wynikow"
               ? "text-white"
               : "text-slate-500 group-hover:text-indigo-500"
