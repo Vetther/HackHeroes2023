@@ -1,5 +1,5 @@
 const DashboardShell = ({ children }: { children: React.ReactNode }) => {
-  return <div className="h-full px-8 pt-7">{children}</div>
+  return <div className="h-full w-full px-8 py-7">{children}</div>
 }
 
 export default DashboardShell
