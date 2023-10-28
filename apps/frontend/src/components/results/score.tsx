@@ -3,7 +3,7 @@ import ProgressBar from "./score-progress-bar"
 
 export default function Score() {
   return (
-    <Card className="h-full items-center justify-center gap-[98px]">
+    <Card className="h-full items-center justify-between">
       <div className="flex flex-col items-center justify-center gap-[49px]">
         <div className="flex flex-col items-center justify-center gap-1">
           <CardTitle>Uzyskany wynik</CardTitle>

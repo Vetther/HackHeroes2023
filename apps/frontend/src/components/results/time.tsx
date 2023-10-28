@@ -5,25 +5,31 @@ export default function Time() {
     <Card className="w-full items-center justify-between">
       <div className="flex shrink grow basis-0 flex-col items-center justify-center gap-2.5">
         <CardTitle>Czas ukończenia</CardTitle>
-        <div>
-          <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
-            00
-          </span>
-          <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
-            h
-          </span>
-          <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
-            00
-          </span>
-          <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
-            m
-          </span>
-          <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
-            00
-          </span>
-          <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
-            s
-          </span>
+        <div className="flex gap-2">
+          <div>
+            <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
+              00
+            </span>
+            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+              h
+            </span>
+          </div>
+          <div>
+            <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
+              00
+            </span>
+            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+              m
+            </span>
+          </div>
+          <div>
+            <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
+              00
+            </span>
+            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+              s
+            </span>
+          </div>
         </div>
       </div>
       <div className="inline-flex w-full items-center justify-between text-sm">

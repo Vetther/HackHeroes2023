@@ -2,7 +2,7 @@ import { Card, CardTitle } from "../ui/card"
 
 export default function Chart() {
   return (
-    <Card className="h-full gap-11">
+    <Card className="h-full">
       <CardTitle>Czas udzielenia odpowiedzi / pytanie</CardTitle>
       <div></div>
     </Card>

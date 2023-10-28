@@ -7,7 +7,7 @@ import Time from "./time"
 export default function Results() {
   return (
     <div className="flex h-full w-full gap-6">
-      <div className="flex w-full max-w-lg flex-col gap-6">
+      <div className="flex w-full max-w-xl flex-col gap-6">
         <Profile />
         <Score />
       </div>
