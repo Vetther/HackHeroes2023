@@ -1,28 +1,33 @@
 "use client"
 
+import useCountAnimate from "@/hooks/use-count-animate"
 import { motion } from "framer-motion"
 
 type ProgressBarProps = {
   points: number
   maxPoints?: number
+  duration?: number
 }
 
 export default function ProgressBar({
   points,
   maxPoints = 40,
+  duration = 2,
 }: ProgressBarProps) {
   const radius = 45
   const size = 300
   const value = Math.ceil((points / maxPoints) * 100)
+  const percentCount = useCountAnimate(0, value)
+  const pointCount = useCountAnimate(0, points)
 
   return (
     <div className="relative grid place-items-center">
       <div className="absolute flex flex-col text-center">
         <span className="text-5xl font-medium leading-[67.2px] text-gray-700">
-          {value}%
+          <motion.span>{percentCount}</motion.span>%
         </span>
         <span className="text-xl font-medium leading-7 text-slate-500">
-          {points}/{maxPoints} pkt
+          <motion.span>{pointCount}</motion.span>/{maxPoints} pkt
         </span>
       </div>
       <svg
@@ -41,7 +46,7 @@ export default function ProgressBar({
           fill="transparent"
           initial={{ strokeDashoffset: 100 }}
           animate={{ strokeDashoffset: 99.9 - value }}
-          transition={{ duration: 2 }}
+          transition={{ duration }}
         />
       </svg>
     </div>
