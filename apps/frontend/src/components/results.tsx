@@ -3,14 +3,14 @@ import { NavbarIcons } from "./icons/navbar"
 
 export default function Results() {
   return (
-    <div className="inline-flex h-screen gap-6 self-stretch px-8">
-      <div className="inline-flex flex-col gap-6">
+    <div className="flex h-full w-full gap-6">
+      <div className="flex w-full max-w-lg flex-col gap-6">
         <ProfileSection />
         <ScoreSection />
       </div>
-      <div className="inline-flex flex-col gap-6">
-        <div className="inline-flex gap-6">
-          <AIReportSection />
+      <div className="flex w-full flex-col gap-6">
+        <div className="flex w-full gap-6">
+          <AIRaportSection />
           <TimeSection />
         </div>
         <ChartSection />
@@ -74,13 +74,13 @@ function ProfileSection() {
   )
 }
 
-function AIReportSection() {
+function AIRaportSection() {
   return (
-    <Section className="max-w-md flex-col items-center justify-center gap-[22px]">
+    <Section className="w-full flex-col items-center justify-center gap-[22px]">
       <h3 className="text-xl font-semibold leading-7 text-gray-700">
         Raport AI
       </h3>
-      <p>
+      <p className="text-center">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa, optio!
         Ipsam minima eos fugit deleniti distinctio ducimus, neque autem quisquam
         suscipit labore. Voluptates animi sapiente inventore? At delectus sint
@@ -97,7 +97,7 @@ function AIReportSection() {
 
 function TimeSection() {
   return (
-    <Section className="flex-col items-center justify-between">
+    <Section className="w-full flex-col items-center justify-between">
       <div className="flex shrink grow basis-0 flex-col items-center justify-center gap-2.5">
         <h3 className="text-xl font-semibold leading-7 text-gray-700">
           Czas ukończenia
