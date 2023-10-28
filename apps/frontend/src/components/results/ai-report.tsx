@@ -1,12 +1,10 @@
-import Section from "./section"
+import { Card, CardTagLine, CardTitle } from "../ui/card"
 
 export default function AIRaport() {
   return (
-    <Section className="w-full flex-col items-center justify-center gap-[22px]">
-      <h3 className="text-xl font-semibold leading-7 text-gray-700">
-        Raport AI
-      </h3>
-      <p className="text-center">
+    <Card className="w-full items-center justify-center gap-[22px]">
+      <CardTitle>Raport AI</CardTitle>
+      <CardTagLine>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa, optio!
         Ipsam minima eos fugit deleniti distinctio ducimus, neque autem quisquam
         suscipit labore. Voluptates animi sapiente inventore? At delectus sint
@@ -16,7 +14,7 @@ export default function AIRaport() {
         consequuntur aspernatur? Quaerat sint voluptatem reprehenderit quisquam,
         veritatis nesciunt, neque fuga et illo alias blanditiis vel,
         perspiciatis laudantium quod!
-      </p>
-    </Section>
+      </CardTagLine>
+    </Card>
   )
 }

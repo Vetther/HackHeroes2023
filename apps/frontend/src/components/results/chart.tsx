@@ -1,12 +1,10 @@
-import Section from "./section"
+import { Card, CardTitle } from "../ui/card"
 
 export default function Chart() {
   return (
-    <Section className="h-full flex-col gap-11">
-      <h3 className="text-xl font-semibold leading-7 text-gray-700">
-        Czas udzielenia odpowiedzi / pytanie
-      </h3>
+    <Card className="h-full gap-11">
+      <CardTitle>Czas udzielenia odpowiedzi / pytanie</CardTitle>
       <div></div>
-    </Section>
+    </Card>
   )
 }

@@ -1,12 +1,10 @@
-import Section from "./section"
+import { Card, CardTitle } from "../ui/card"
 
 export default function Time() {
   return (
-    <Section className="w-full flex-col items-center justify-between">
+    <Card className="w-full items-center justify-between">
       <div className="flex shrink grow basis-0 flex-col items-center justify-center gap-2.5">
-        <h3 className="text-xl font-semibold leading-7 text-gray-700">
-          Czas ukończenia
-        </h3>
+        <CardTitle>Czas ukończenia</CardTitle>
         <div>
           <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
             00
@@ -46,6 +44,6 @@ export default function Time() {
           </span>
         </div>
       </div>
-    </Section>
+    </Card>
   )
 }

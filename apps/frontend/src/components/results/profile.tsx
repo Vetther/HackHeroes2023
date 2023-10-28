@@ -1,13 +1,11 @@
 import { NavbarIcons } from "../icons/navbar"
-import Section from "./section"
+import { Card, CardTagLine } from "../ui/card"
 
 export default function Profile() {
   return (
-    <Section className="justify-between gap-2.5">
+    <Card className="flex-row items-center justify-between gap-2.5">
       <div className="inline-flex flex-col gap-2.5">
-        <span className="text-sm leading-[21px] text-slate-500">
-          Dane Rozwiązującego
-        </span>
+        <CardTagLine>Dane Rozwiązującego</CardTagLine>
         <ul>
           <li className="self-stretch">
             <span className="text-sm leading-tight text-gray-700">Imię: </span>
@@ -49,9 +47,7 @@ export default function Profile() {
           </li>
         </ul>
       </div>
-      <div className="grid place-items-center">
-        <NavbarIcons.profile className="h-[120px] w-[120px] rounded-full border border-black px-2 pt-6" />
-      </div>
-    </Section>
+      <NavbarIcons.profile className="h-[120px] w-[120px] rounded-full border border-black px-2 pt-6" />
+    </Card>
   )
 }
