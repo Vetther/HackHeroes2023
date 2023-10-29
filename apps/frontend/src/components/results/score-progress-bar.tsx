@@ -34,13 +34,24 @@ export default function ProgressBar({
         viewBox="0 0 100 100"
         width={size}
         height={size}
-        className="-rotate-90 stroke-primary stroke-[6]"
+        className="-rotate-90 stroke-[6]"
       >
+        <circle
+          cx={50}
+          cy={50}
+          r={radius}
+          pathLength={100}
+          stroke="#F8F9FA"
+          strokeDasharray={100}
+          strokeLinecap="round"
+          fill="transparent"
+        ></circle>
         <motion.circle
           cx={50}
           cy={50}
           r={radius}
           pathLength={100}
+          stroke="hsl(var(--primary))"
           strokeDasharray={100}
           strokeLinecap="round"
           fill="transparent"

@@ -3,9 +3,9 @@
 import { Card, CardContent, CardTitle } from "../ui/card"
 
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   YAxis,
@@ -41,7 +41,7 @@ export default function Chart() {
       <CardTitle>Czas udzielenia odpowiedzi / pytanie</CardTitle>
       <CardContent className="h-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
+          <AreaChart
             data={data}
             margin={{
               top: 5,
@@ -50,6 +50,12 @@ export default function Chart() {
               bottom: 0,
             }}
           >
+            <defs>
+              <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#7459D9" stopOpacity={0.1} />
+                <stop offset="95%" stopColor="#7459D9" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <CartesianGrid vertical={false} color="F1F1F5" strokeWidth={0.5} />
             <YAxis
               axisLine={false}
@@ -82,18 +88,18 @@ export default function Chart() {
                 return null
               }}
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="seconds"
               strokeWidth={4}
               dot={false}
               activeDot={false}
-              style={{
-                stroke: "#5D5FEF",
-                strokeLinecap: "round",
-              }}
+              stroke="#5D5FEF"
+              strokeLinecap="round"
+              fill="url(#gradient)"
+              fillOpacity={1}
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>

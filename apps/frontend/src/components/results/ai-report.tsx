@@ -1,10 +1,12 @@
-import { Card, CardTagLine, CardTitle } from "../ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
 export default function AIRaport() {
   return (
     <Card className="w-full items-center justify-center gap-[22px]">
-      <CardTitle>Raport AI</CardTitle>
-      <CardTagLine>
+      <CardHeader className="flex items-center justify-center">
+        <CardTitle className="text-center">Raport AI</CardTitle>
+      </CardHeader>
+      <CardContent className="text-center text-sm leading-[21px] text-slate-500">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa, optio!
         Ipsam minima eos fugit deleniti distinctio ducimus, neque autem quisquam
         suscipit labore. Voluptates animi sapiente inventore? At delectus sint
@@ -14,7 +16,7 @@ export default function AIRaport() {
         consequuntur aspernatur? Quaerat sint voluptatem reprehenderit quisquam,
         veritatis nesciunt, neque fuga et illo alias blanditiis vel,
         perspiciatis laudantium quod!
-      </CardTagLine>
+      </CardContent>
     </Card>
   )
 }
