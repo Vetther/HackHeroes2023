@@ -7,23 +7,23 @@ export default function Profile() {
       <div className="inline-flex flex-col gap-2.5">
         <CardTagLine>Dane Rozwiązującego</CardTagLine>
         <ul>
-          <li className="self-stretch text-sm leading-relaxed">
+          <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Imię: </span>
             <span className="font-bold text-gray-700">User</span>
           </li>
-          <li className="self-stretch text-sm leading-relaxed">
+          <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Nazwisko: </span>
             <span className="font-bold text-gray-700">Anonymous</span>
           </li>
-          <li className="self-stretch text-sm leading-relaxed">
+          <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Adres email: </span>
             <span className="font-bold text-gray-700">email@email.email</span>
           </li>
-          <li className="self-stretch text-sm leading-relaxed">
+          <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Szkoła: </span>
             <span className="font-bold text-gray-700">Szkoła</span>
           </li>
-          <li className="self-stretch text-sm leading-relaxed">
+          <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Indentyfikator: </span>
             <span className="font-bold text-gray-700">1234567890</span>
           </li>

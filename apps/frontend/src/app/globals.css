@@ -2,9 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+.scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: #000000 hsl(var(--background));
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 16px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #bdbdbd;
+  border-radius: 10px;
+  border: 3px solid hsl(var(--background));
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #cecece;
+  border-radius: 10px;
+  border: 3px solid hsl(var(--background));
+}
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 17% 98%; /* #F8F9FA */
     --foreground: 0 0% 3.9%;
 
     --card: 0 0% 100%;
