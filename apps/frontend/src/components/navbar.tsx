@@ -6,17 +6,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-import { ChevronDown, Plus } from "lucide-react"
+import { useAtom } from "jotai"
+import { ChevronDown, Menu, Plus } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import Breadcrumbs from "./breadcrumbs"
+import { isOpenSidebarAtom } from "./sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
 import { Separator } from "./ui/separator"
 import { Skeleton } from "./ui/skeleton"
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useAtom(isOpenSidebarAtom)
+
   const pathname = usePathname()
   const items = pathname
     .split("/")
@@ -27,16 +31,26 @@ export default function Navbar() {
     })
 
   return (
-    <nav className="flex w-full items-center justify-between px-8 pt-5">
-      <div className="flex flex-col">
-        <Breadcrumbs
-          items={[{ label: "Mistrzostwa Mechaników", href: "/" }, ...items]}
-        />
-        <span className="text-xl font-semibold capitalize leading-7 text-gray-700">
-          {items.length > 0 ? items[items.length - 1].label : ""}
-        </span>
+    <nav className="flex w-full items-center gap-4 px-8 pt-5">
+      <Button
+        variant="outline"
+        size="icon"
+        className="lg:hidden"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <Menu />
+      </Button>
+      <div className="flex w-full flex-row justify-between">
+        <div className="flex flex-col">
+          <Breadcrumbs
+            items={[{ label: "Mistrzostwa Mechaników", href: "/" }, ...items]}
+          />
+          <span className="text-xl font-semibold capitalize leading-7 text-gray-700">
+            {items.length > 0 ? items[items.length - 1].label : ""}
+          </span>
+        </div>
+        <NavbarUser />
       </div>
-      <NavbarUser />
     </nav>
   )
 }

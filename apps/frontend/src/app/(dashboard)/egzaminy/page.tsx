@@ -11,8 +11,8 @@ import {
 
 const ExamPage = () => {
   return (
-    <div className="flex h-full w-full items-start justify-start gap-8">
-      <div className="flex h-full w-full max-w-[420px] flex-col items-start gap-8">
+    <div className="flex h-full w-full flex-col items-start justify-start gap-8 lg:flex-row">
+      <div className="flex h-full w-full flex-col items-start gap-8 lg:max-w-[420px]">
         <Card className="h-full w-full">
           <CardHeader>
             <CardTagLine>Egzamin Teoretyczny</CardTagLine>

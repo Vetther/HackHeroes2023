@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
 export default function AIRaport() {
   return (
-    <Card className="w-full items-center justify-center gap-[22px]">
+    <Card className="h-full w-full items-center justify-center gap-[22px] xl:h-auto">
       <CardHeader className="flex items-center justify-center">
         <CardTitle className="text-center">Raport AI</CardTitle>
       </CardHeader>

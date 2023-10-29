@@ -1,5 +1,6 @@
 "use client"
 
+import { cn } from "@/lib/utils"
 import { Card, CardContent, CardTitle } from "../ui/card"
 
 import {
@@ -35,11 +36,13 @@ const data = [
   },
 ]
 
-export default function Chart() {
+export default function Chart({
+  className,
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <Card className="h-full">
+    <Card className={cn("h-full", className)}>
       <CardTitle>Czas udzielenia odpowiedzi / pytanie</CardTitle>
-      <CardContent className="h-full">
+      <CardContent className="h-80 xl:h-64 2xl:h-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
@@ -95,7 +98,6 @@ export default function Chart() {
               dot={false}
               activeDot={false}
               stroke="#5D5FEF"
-              strokeLinecap="round"
               fill="url(#gradient)"
               fillOpacity={1}
             />
