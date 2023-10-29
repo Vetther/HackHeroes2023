@@ -1,5 +1,6 @@
-import { NavbarIcons } from "../icons/navbar"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Card, CardTagLine } from "../ui/card"
+import { Skeleton } from "../ui/skeleton"
 
 export default function Profile() {
   return (
@@ -29,7 +30,13 @@ export default function Profile() {
           </li>
         </ul>
       </div>
-      <NavbarIcons.profile className="h-[120px] w-[120px] rounded-full border border-black px-2 pt-6" />
+      {/* <Avatar className="h-32 w-32 bg-transparent bg-white ring-2 ring-primary ring-offset-4"> */}
+      <Avatar className="h-32 w-32 bg-transparent bg-white ring-2 ring-primary ring-offset-4">
+        <AvatarImage src={`https://placehold.it/128`} />
+        <AvatarFallback className="bg-transparent">
+          <Skeleton className="h-32 w-32 rounded-full" />
+        </AvatarFallback>
+      </Avatar>
     </Card>
   )
 }

@@ -14,6 +14,7 @@ import Breadcrumbs from "./breadcrumbs"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
 import { Separator } from "./ui/separator"
+import { Skeleton } from "./ui/skeleton"
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -47,12 +48,14 @@ const NavbarUser = () => {
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
         <div className="flex h-12 flex-row items-center gap-2.5 py-0">
-          <Avatar>
+          <Avatar className="h-10 w-10">
             <AvatarImage
               alt={`Profile photo of ${"Michał Bednarek"}`}
-              src="https://s3-alpha-sig.figma.com/img/63dc/1059/5fa6c5970f56b4c1d92d37c5e7c961a1?Expires=1699228800&Signature=NNeoeMw8peJmmG7u5LJAUiZGk8g2hzvFhqQAFyWQeZKO8kC2GEWPCGyR0U2gFhCaQb4VF0vu~Yrc1KgI6ivDa7R3SEy~vljofHUFtNDz2Q1DKTjlA6hv1LmoVurXdTyFMXL4YNpwnwa1v~5DnZYJdwA65vqXCrcYMep5Wt4gtqYl-ppEBb7JAKhCRj5GGrbFVawrIhrlrUYQV9GOjIhHjxukSQR1PF80ft1QXPX10LJC-09XJsS7nF6H8uUg1lo7NpaN8ElXBrhXF1i7qGhbnQZjKfXffLYiXG74mL3YTXSPdDgVpQ6aMrGIi2F4xa0~ufd0F5QDOJJlH00c4ET5tQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+              src={`https://placehold.it/40`}
             />
-            <AvatarFallback>MB</AvatarFallback>
+            <AvatarFallback className="bg-transparent">
+              <Skeleton className="h-full w-full" />
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-row gap-2">
             <span className="text-sm font-semibold text-gray-700">
