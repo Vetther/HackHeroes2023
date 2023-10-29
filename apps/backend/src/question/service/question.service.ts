@@ -11,9 +11,9 @@ export class QuestionService {
   }
 
   async getRandomQuestions(): Promise<Question[]> {
-    return this.prisma.question.findMany({
-      take: 40,
-      skip: Math.floor(Math.random() * 100),
-    });
+    // Prisma nie wspiera jeszcze ORDER BY RANDOM()
+    return this.prisma.$queryRawUnsafe(
+      `SELECT * FROM "Question" ORDER BY RANDOM() LIMIT 40;`,
+    );
   }
 }
