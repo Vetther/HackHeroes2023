@@ -15,7 +15,10 @@ export default function Results() {
         <div className="flex w-full flex-col gap-6">
           <div className="flex h-full w-full flex-col gap-6 2xl:h-auto 2xl:flex-row">
             <AIRaport />
-            <Time />
+            <Time
+              start={new Date(new Date().getTime() - 62.6 * 60 * 1000)}
+              end={new Date()}
+            />
           </div>
           <Chart className="hidden xl:flex" />
         </div>
