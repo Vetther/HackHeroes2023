@@ -48,7 +48,7 @@ const Sidebar = () => {
             </p>
           </div>
           <SidebarNavigationMobile />
-          <div className="px-8 pb-24">
+          <div className="px-4 pb-24 lg:px-8">
             <div className="relative flex h-[200px] w-full flex-col items-center justify-between overflow-hidden rounded-lg bg-indigo-500 py-6">
               <div className="flex flex-col items-center gap-2">
                 <SidebarIcons.banner />

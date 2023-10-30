@@ -28,7 +28,7 @@ const SidebarNavigationMobile = () => {
 
   return (
     <div
-      className="flex flex-1 flex-col justify-center gap-[18px] px-8"
+      className="flex flex-1 flex-col justify-center gap-[18px] px-4"
       ref={navRef}
     >
       {navigation.map(({ label, path, icon, active }, index) => (

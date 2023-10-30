@@ -1,32 +1,35 @@
+import { cn } from "@/lib/utils"
 import { Card, CardTitle } from "../ui/card"
 
-export default function Time() {
+export default function Time({
+  className,
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <Card className="w-full items-center justify-between">
+    <Card className={cn("w-full items-center justify-between", className)}>
       <div className="flex shrink grow basis-0 flex-col items-center justify-center gap-2.5">
         <CardTitle>Czas ukończenia</CardTitle>
         <div className="flex gap-2">
           <div>
-            <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
+            <span className="text-[36px] font-semibold text-gray-700 sm:text-[56px]">
               00
             </span>
-            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+            <span className="text-[24px] font-semibold text-gray-700 sm:text-[32px]">
               h
             </span>
           </div>
           <div>
-            <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
+            <span className="text-[36px] font-semibold text-gray-700 sm:text-[56px]">
               00
             </span>
-            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+            <span className="text-[24px] font-semibold text-gray-700 sm:text-[32px]">
               m
             </span>
           </div>
           <div>
-            <span className="text-[56px] font-semibold leading-[78.4px] text-gray-700">
+            <span className="text-[36px] font-semibold text-gray-700 sm:text-[56px]">
               00
             </span>
-            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+            <span className="text-[24px] font-semibold text-gray-700 sm:text-[32px]">
               s
             </span>
           </div>

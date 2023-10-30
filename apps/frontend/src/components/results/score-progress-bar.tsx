@@ -1,27 +1,28 @@
 "use client"
 
 import useCountAnimate from "@/hooks/use-count-animate"
+import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 
-type ProgressBarProps = {
+interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
   points: number
   maxPoints?: number
   duration?: number
 }
 
 export default function ProgressBar({
+  className,
   points,
   maxPoints = 40,
   duration = 2,
 }: ProgressBarProps) {
   const radius = 45
-  const size = 300
   const value = Math.ceil((points / maxPoints) * 100)
   const percentCount = useCountAnimate(0, value)
   const pointCount = useCountAnimate(0, points)
 
   return (
-    <div className="relative grid place-items-center">
+    <div className={cn("relative grid place-items-center", className)}>
       <div className="absolute flex flex-col text-center">
         <span className="text-5xl font-medium leading-[67.2px] text-gray-700">
           <motion.span>{percentCount}</motion.span>%
@@ -32,9 +33,7 @@ export default function ProgressBar({
       </div>
       <svg
         viewBox="0 0 100 100"
-        width={size}
-        height={size}
-        className="-rotate-90 stroke-[6]"
+        className="h-[250px] w-[250px] -rotate-90 stroke-[6] md:h-[300px] md:w-[300px]"
       >
         <circle
           cx={50}
