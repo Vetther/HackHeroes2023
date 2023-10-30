@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Exam {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  questions   Question[]
+  ActualExam  ActualExam[]
+
+  @@map(name: "exam")
+}
+
+model Question {
+  id             Int              @id @default(autoincrement())
+  exam_id        Int
+  content        String
+  attachment     String?
+  answers        Answer[]
+  exam           Exam             @relation(fields: [exam_id], references: [id])
+  ActualQuestion ActualQuestion[]
+
+  @@map(name: "question")
+}
+
+model Answer {
+  id          Int      @id @default(autoincrement())
+  question_id Int
+  answer_a    String
+  answer_b    String
+  answer_c    String
+  answer_d    String
+  correct     String
+  question    Question @relation(fields: [question_id], references: [id])
+
+  @@map(name: "answer")
+}
+
+model ActualExam {
+  id          Int              @id @default(autoincrement())
+  exam_id     Int
+  secret      String           @unique
+  start_time  DateTime
+  finish_time DateTime?
+  questions   ActualQuestion[]
+  exam        Exam             @relation(fields: [exam_id], references: [id])
+
+  @@map(name: "actual_exam")
+}
+
+model ActualQuestion {
+  id             Int        @id @default(autoincrement())
+  actual_exam_id Int
+  question_id    Int
+  answer         String
+  question       Question   @relation(fields: [question_id], references: [id])
+  actual_exam    ActualExam @relation(fields: [actual_exam_id], references: [id])
+
+  @@map(name: "actual_question")
+}

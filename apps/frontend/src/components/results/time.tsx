@@ -1,6 +1,7 @@
 "use client"
 
 import useCountAnimate from "@/hooks/use-count-animate"
+import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { Card, CardTitle } from "../ui/card"
 
@@ -9,7 +10,11 @@ type TimeProps = {
   end: Date
 }
 
-export default function Time({ start, end }: TimeProps) {
+export default function Time({
+  className,
+  start,
+  end,
+}: TimeProps & React.ComponentProps<typeof Card>) {
   const time = new Date(end.getTime() - start.getTime())
   const hours = useCountAnimate(0, time.getUTCHours())
   const minutes = useCountAnimate(0, time.getUTCMinutes())
@@ -24,7 +29,7 @@ export default function Time({ start, end }: TimeProps) {
   })
 
   return (
-    <Card className="w-full items-center justify-between">
+    <Card className={cn("w-full items-center justify-between", className)}>
       <div className="flex shrink grow basis-0 flex-col items-center justify-center gap-2.5">
         <CardTitle>Czas ukończenia</CardTitle>
         <div className="flex gap-2">
@@ -33,7 +38,7 @@ export default function Time({ start, end }: TimeProps) {
               {hours.get() > 10 && "0"}
               <motion.span>{hours}</motion.span>
             </span>
-            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+            <span className="text-[24px] font-semibold text-gray-700 sm:text-[32px]">
               h
             </span>
           </div>
@@ -42,7 +47,7 @@ export default function Time({ start, end }: TimeProps) {
               {minutes.get() > 10 && "0"}
               <motion.span>{minutes}</motion.span>
             </span>
-            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+            <span className="text-[24px] font-semibold text-gray-700 sm:text-[32px]">
               m
             </span>
           </div>
@@ -51,7 +56,7 @@ export default function Time({ start, end }: TimeProps) {
               {seconds.get() > 10 && "0"}
               <motion.span>{seconds}</motion.span>
             </span>
-            <span className="text-[32px] font-semibold leading-[44.8px] text-gray-700">
+            <span className="text-[24px] font-semibold text-gray-700 sm:text-[32px]">
               s
             </span>
           </div>

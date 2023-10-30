@@ -31,11 +31,11 @@ export default function Navbar() {
     })
 
   return (
-    <nav className="flex w-full items-center gap-4 px-8 pt-5">
+    <nav className="flex w-full items-center gap-2 px-4 pt-5 lg:gap-4 lg:px-8">
       <Button
         variant="outline"
         size="icon"
-        className="lg:hidden"
+        className="aspect-square lg:hidden"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <Menu />
@@ -61,7 +61,7 @@ const NavbarUser = () => {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
-        <div className="flex h-12 flex-row items-center gap-2.5 py-0">
+        <div className="hidden h-12 flex-row items-center gap-2.5 py-0 lg:flex">
           <Avatar className="h-10 w-10">
             <AvatarImage
               alt={`Profile photo of ${"Michał Bednarek"}`}

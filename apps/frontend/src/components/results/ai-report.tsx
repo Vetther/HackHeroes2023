@@ -1,8 +1,16 @@
+import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
-export default function AIRaport() {
+export default function AIRaport({
+  className,
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <Card className="h-full w-full items-center justify-center gap-[22px] xl:h-auto">
+    <Card
+      className={cn(
+        "h-full w-full items-center justify-center gap-[22px] xl:h-auto",
+        className
+      )}
+    >
       <CardHeader className="flex items-center justify-center">
         <CardTitle className="text-center">Raport AI</CardTitle>
       </CardHeader>
