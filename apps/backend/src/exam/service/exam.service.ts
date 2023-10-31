@@ -1,7 +1,7 @@
 import { PrismaService } from '../../prisma.service';
 import { QuestionService } from '../../question/service/question.service';
 import { Injectable } from '@nestjs/common';
-import { ExamData } from '../exam.interface';
+import { ExamData, ExamResult } from '../exam.interface';
 import { v4 as uuidv4 } from 'uuid';
 import { QuestionData } from '../../question/question.interface';
 
@@ -12,24 +12,17 @@ export class ExamService {
     private question: QuestionService,
   ) {}
 
-  async getExam(exam_id: number): Promise<ExamData> {
+  async createExam(exam_id: number): Promise<ExamData> {
     const questions: QuestionData[] = await this.question.getRandomQuestions();
-    const examData: ExamData = await this.createExam(exam_id);
-    examData.questions = questions;
+    // Export exam data
+    const examData: ExamData = await this.createExamData(exam_id);
 
-    await this.prisma.actualExam.create({
+    // Create actual exam
+    const exam = await this.prisma.actualExam.create({
       data: {
         secret: examData.secret,
         start_time: examData.start_time,
         finish_time: null,
-        questions: {
-          create: questions.map((question) => {
-            return {
-              question_id: question.id,
-              answer: '',
-            };
-          }, {}),
-        },
         exam: {
           connect: {
             id: exam_id,
@@ -37,11 +30,97 @@ export class ExamService {
         },
       },
     });
+    // Create actual questions
+    for (let i: number = 0; i < questions.length; i++) {
+      const question: QuestionData = questions[i];
+      const actualQuestion = await this.prisma.actualQuestion.create({
+        data: {
+          answer: null,
+          question: {
+            connect: {
+              id: question.id,
+            },
+          },
+          actual_exam: {
+            connect: {
+              id: exam.id,
+            },
+          },
+        },
+      });
+      // Add question to exam data
+      examData.questions.push({
+        id: actualQuestion.id,
+        content: question.content,
+        attachment: question.attachment,
+        answer_a: question.answer_a,
+        answer_b: question.answer_b,
+        answer_c: question.answer_c,
+        answer_d: question.answer_d,
+      });
+    }
 
     return examData;
   }
 
-  async createExam(exam_id: number): Promise<ExamData> {
+  async sendExamResult(examResult: ExamResult): Promise<void> {
+    const valid: boolean = await this.validateExamResult(examResult);
+
+    if (!valid) {
+      console.log("Exam result isn't valid");
+      return;
+    }
+
+    const exam = await this.prisma.actualExam.findFirst({
+      where: {
+        secret: examResult.secret,
+      },
+    });
+
+    if (exam) {
+      await this.prisma.actualExam.update({
+        where: {
+          id: exam.id,
+        },
+        data: {
+          finish_time: new Date(),
+        },
+      });
+
+      for (let i = 0; i < examResult.questions.length; i++) {
+        const question = examResult.questions[i];
+        await this.prisma.actualQuestion.update({
+          where: {
+            id: question.id,
+          },
+          data: {
+            answer: question.answer,
+          },
+        });
+      }
+    }
+  }
+
+  async validateExamResult(examResult: ExamResult): Promise<boolean> {
+    const exam = await this.prisma.actualExam.findFirst({
+      where: {
+        secret: examResult.secret,
+      },
+    });
+
+    if (exam) {
+      if (exam.finish_time) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+    const examResultTime = new Date(examResult.finish_time).getTime();
+    const examStartTime = new Date(exam.start_time).getTime();
+    return examResultTime - examStartTime <= 3600000;
+  }
+
+  async createExamData(exam_id: number): Promise<ExamData> {
     const uuid = uuidv4();
     const name = await this.getExamName(exam_id);
 

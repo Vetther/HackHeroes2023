@@ -61,7 +61,7 @@ model ActualQuestion {
   id             Int        @id @default(autoincrement())
   actual_exam_id Int
   question_id    Int
-  answer         String
+  answer         String?
   question       Question   @relation(fields: [question_id], references: [id])
   actual_exam    ActualExam @relation(fields: [actual_exam_id], references: [id])
 

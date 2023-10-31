@@ -7,3 +7,8 @@ export interface QuestionData {
   answer_c: string;
   answer_d: string;
 }
+
+export interface QuestionAnswer {
+  id: number;
+  answer: string;
+}
