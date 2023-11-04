@@ -4,6 +4,11 @@ import { Injectable } from '@nestjs/common';
 import { ExamData, ExamResult } from '../exam.interface';
 import { v4 as uuidv4 } from 'uuid';
 import { QuestionData } from '../../question/question.interface';
+import {
+  ExamNotFound,
+  ExamAlreadySolved,
+  TimeOut,
+} from 'src/errors/exam.errors';
 
 @Injectable()
 export class ExamService {
@@ -64,12 +69,7 @@ export class ExamService {
   }
 
   async sendExamResult(examResult: ExamResult): Promise<void> {
-    const valid: boolean = await this.validateExamResult(examResult);
-
-    if (!valid) {
-      console.log("Exam result isn't valid");
-      return;
-    }
+    await this.validateExamResult(examResult);
 
     const exam = await this.prisma.actualExam.findFirst({
       where: {
@@ -101,7 +101,7 @@ export class ExamService {
     }
   }
 
-  async validateExamResult(examResult: ExamResult): Promise<boolean> {
+  async validateExamResult(examResult: ExamResult) {
     const exam = await this.prisma.actualExam.findFirst({
       where: {
         secret: examResult.secret,
@@ -110,14 +110,16 @@ export class ExamService {
 
     if (exam) {
       if (exam.finish_time) {
-        return false;
+        throw new ExamAlreadySolved();
       }
     } else {
-      return false;
+      throw new ExamNotFound();
     }
-    const examResultTime = new Date(examResult.finish_time).getTime();
-    const examStartTime = new Date(exam.start_time).getTime();
-    return examResultTime - examStartTime <= 3600000;
+    const examResultTime: number = new Date(examResult.finish_time).getTime();
+    const examStartTime: number = new Date(exam.start_time).getTime();
+    if (examResultTime - examStartTime > 3600000) {
+      throw new TimeOut();
+    }
   }
 
   async createExamData(exam_id: number): Promise<ExamData> {
