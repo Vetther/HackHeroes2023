@@ -3,18 +3,10 @@
 import { useCalendar } from "@/hooks/use-calendar"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  format,
-  isAfter,
-  isSameDay,
-  isSameMonth,
-  setHours,
-  setMinutes,
-} from "date-fns"
+import { format, isBefore, isSameDay, isSameMonth } from "date-fns"
 import { pl } from "date-fns/locale"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useEffect, useState } from "react"
-import { TimeValue } from "react-aria"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../ui/button"
@@ -35,7 +27,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Textarea } from "../ui/textarea"
-import { TimeField } from "../ui/time-field"
+import { TimePicker } from "../ui/time-picker"
 
 const data = [
   {
@@ -175,29 +167,16 @@ const createEventSchema = z.object({
   dates: z
     .object({
       day: z.date(),
-      startTime: z
-        .custom<TimeValue>()
-        .refine((value) => value !== undefined, { message: "123" }),
-      finishTime: z
-        .custom<TimeValue>()
-        .refine((value) => value !== undefined, { message: "123" }),
+      startTime: z.date({ required_error: "Wpisz datę rozpoczęcia." }),
+      finishTime: z.date({
+        required_error: "Wpisz datę zakończenia.",
+      }),
     })
-    .refine(
-      (value) =>
-        isAfter(
-          setMinutes(
-            setHours(value.day, +value.startTime.hour),
-            +value.startTime.minute
-          ),
-          setMinutes(
-            setHours(value.day, +value.finishTime.hour),
-            +value.finishTime.minute
-          )
-        ),
-      { message: "Start date must be earlier than End date." }
-    ),
+    .refine((date) => isBefore(date.startTime, date.finishTime), {
+      message: "Start time must be before finish time.",
+    }),
 
-  text: z.string().min(1),
+  text: z.string().min(1, { message: "Wpisz opis." }),
 })
 
 const CreateEvent = ({ day }: { day: Date }) => {
@@ -213,10 +192,6 @@ const CreateEvent = ({ day }: { day: Date }) => {
     },
   })
 
-  useEffect(() => {
-    console.log(form.getValues())
-  }, [form.watch()])
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
@@ -231,16 +206,19 @@ const CreateEvent = ({ day }: { day: Date }) => {
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => console.log(data))}>
+          <form
+            onSubmit={form.handleSubmit((data) => console.log(data))}
+            className="flex flex-col gap-2"
+          >
             <div className="flex flex-row gap-2">
               <FormField
                 control={form.control}
                 name="dates.startTime"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Godzina rozpoczęcia</FormLabel>
+                    <FormLabel htmlFor="hours">Godzina rozpoczęcia</FormLabel>
                     <FormControl>
-                      <TimeField {...field} />
+                      <TimePicker date={field.value} setDate={field.onChange} />
                     </FormControl>
                     <FormDescription>
                       Wybierz datę rozpoczęcia egzaminu
@@ -254,9 +232,9 @@ const CreateEvent = ({ day }: { day: Date }) => {
                 name="dates.finishTime"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Godzina zakończenia</FormLabel>
+                    <FormLabel htmlFor="hours">Godzina zakończenia</FormLabel>
                     <FormControl>
-                      <TimeField {...field} />
+                      <TimePicker date={field.value} setDate={field.onChange} />
                     </FormControl>
                     <FormDescription>
                       Wybierz datę zakończenia egzaminu
@@ -266,7 +244,6 @@ const CreateEvent = ({ day }: { day: Date }) => {
                 )}
               />
             </div>
-
             <FormField
               control={form.control}
               name="text"
@@ -281,7 +258,6 @@ const CreateEvent = ({ day }: { day: Date }) => {
                 </FormItem>
               )}
             />
-
             <Button>Dodaj egzamin</Button>
           </form>
         </Form>
