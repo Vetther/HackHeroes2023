@@ -1,4 +1,4 @@
-import Calendar from "@/components/calendar"
+import Calendar from "@/components/calendar/calendar"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -64,7 +64,9 @@ const ExamPage = () => {
           </CardFooter>
         </Card>
       </div>
-      <Calendar />
+      <Card className="h-full w-full p-3">
+        <Calendar />
+      </Card>
     </div>
   )
 }
