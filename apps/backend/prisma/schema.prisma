@@ -33,14 +33,14 @@ model Question {
 }
 
 model Answer {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   question_id Int
   answer_a    String
   answer_b    String
   answer_c    String
   answer_d    String
-  correct     String
-  question    Question @relation(fields: [question_id], references: [id])
+  correct     correctAnswer
+  question    Question      @relation(fields: [question_id], references: [id])
 
   @@map(name: "answer")
 }
@@ -58,12 +58,19 @@ model ActualExam {
 }
 
 model ActualQuestion {
-  id             Int        @id @default(autoincrement())
+  id             Int            @id @default(autoincrement())
   actual_exam_id Int
   question_id    Int
-  answer         String
-  question       Question   @relation(fields: [question_id], references: [id])
-  actual_exam    ActualExam @relation(fields: [actual_exam_id], references: [id])
+  answer         correctAnswer?
+  question       Question       @relation(fields: [question_id], references: [id])
+  actual_exam    ActualExam     @relation(fields: [actual_exam_id], references: [id])
 
   @@map(name: "actual_question")
+}
+
+enum correctAnswer {
+  a
+  b
+  c
+  d
 }
