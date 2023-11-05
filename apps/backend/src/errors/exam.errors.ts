@@ -6,7 +6,7 @@ export class TimeOut extends HttpException {
       {
         statusCode: 400,
         timestamp: new Date().toISOString(),
-        path: 'api/v1/exam',
+        path: 'docs/v1/exam',
         message: 'Time out',
       },
       400,
@@ -20,7 +20,7 @@ export class ExamAlreadySolved extends HttpException {
       {
         statusCode: 400,
         timestamp: new Date().toISOString(),
-        path: 'api/v1/exam',
+        path: 'docs/v1/exam',
         message: 'Exam already solved',
       },
       400,
@@ -34,7 +34,7 @@ export class ExamNotFound extends HttpException {
       {
         statusCode: 404,
         timestamp: new Date().toISOString(),
-        path: 'api/v1/exam',
+        path: 'docs/v1/exam',
         message: 'Exam not found',
       },
       404,

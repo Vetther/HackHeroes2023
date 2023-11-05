@@ -1,8 +1,13 @@
-import { Controller, Get, InternalServerErrorException, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Param,
+} from '@nestjs/common';
 import { QuestionService } from '../service/question.service';
 import { Question } from '@prisma/client';
 import { QuestionData } from '../question.interface';
-import { DevApiTags } from '../../decorators/dev.controller';
+import { DevApiTags } from '../../docs/dev.tag';
 
 @Controller('dev-api/v1/question')
 @DevApiTags('dev')

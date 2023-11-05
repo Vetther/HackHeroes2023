@@ -1,7 +1,7 @@
 import { PrismaService } from '../../prisma.service';
 import { QuestionService } from '../../question/service/question.service';
 import { Injectable } from '@nestjs/common';
-import { ExamData, ExamResult } from '../exam.interface';
+import { CreateExamDto, ResultExamDto } from '../exam.interface';
 import { v4 as uuidv4 } from 'uuid';
 import { QuestionData } from '../../question/question.interface';
 import {
@@ -17,10 +17,10 @@ export class ExamService {
     private question: QuestionService,
   ) {}
 
-  async createExam(exam_id: number): Promise<ExamData> {
+  async createExam(exam_id: number): Promise<CreateExamDto> {
     const questions: QuestionData[] = await this.question.getRandomQuestions();
     // Export exam data
-    const examData: ExamData = await this.createExamData(exam_id);
+    const examData: CreateExamDto = await this.createExamData(exam_id);
 
     // Create actual exam
     const exam = await this.prisma.actualExam.create({
@@ -68,7 +68,7 @@ export class ExamService {
     return examData;
   }
 
-  async sendExamResult(examResult: ExamResult): Promise<void> {
+  async sendExamResult(examResult: ResultExamDto): Promise<void> {
     await this.validateExamResult(examResult);
 
     const exam = await this.prisma.actualExam.findFirst({
@@ -101,7 +101,7 @@ export class ExamService {
     }
   }
 
-  async validateExamResult(examResult: ExamResult) {
+  async validateExamResult(examResult: ResultExamDto) {
     const exam = await this.prisma.actualExam.findFirst({
       where: {
         secret: examResult.secret,
@@ -122,7 +122,7 @@ export class ExamService {
     }
   }
 
-  async createExamData(exam_id: number): Promise<ExamData> {
+  async createExamData(exam_id: number): Promise<CreateExamDto> {
     const uuid = uuidv4();
     const name = await this.getExamName(exam_id);
 

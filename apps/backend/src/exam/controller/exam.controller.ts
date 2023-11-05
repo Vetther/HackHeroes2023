@@ -8,7 +8,7 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { ExamService } from '../service/exam.service';
-import { ExamData, ExamResult } from '../exam.interface';
+import { CreateExamDto, ResultExamDto } from '../exam.interface';
 import {
   ExamAlreadySolved,
   ExamNotFound,
@@ -24,15 +24,15 @@ export class ExamController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get exam by id. (e.g. ../exam/1 == INF.02)' })
-  async createExam(@Param('id') id: number): Promise<ExamData> {
+  async createExam(@Param('id') id: number): Promise<CreateExamDto> {
     return this.examService.createExam(Number(id));
   }
 
   @Post()
   @UseFilters(new HttpExceptionFilter())
-  async sendExamResult(@Body() examResult: ExamResult): Promise<void> {
+  async sendExamResult(@Body() resultExam: ResultExamDto): Promise<void> {
     try {
-      return this.examService.sendExamResult(examResult);
+      return this.examService.sendExamResult(resultExam);
     } catch (error: any) {
       if (error instanceof ExamNotFound) {
         response.status(HttpStatus.NOT_FOUND).send('Exam not found.');
