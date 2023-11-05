@@ -16,12 +16,14 @@ import {
 } from '../../errors/exam.errors';
 import { response } from 'express';
 import { HttpExceptionFilter } from '../../errors/filter';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('api/v1/exam')
 export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get exam by id. (e.g. ../exam/1 == INF.02)' })
   async createExam(@Param('id') id: number): Promise<ExamData> {
     return this.examService.createExam(Number(id));
   }
@@ -33,13 +35,10 @@ export class ExamController {
       return this.examService.sendExamResult(examResult);
     } catch (error: any) {
       if (error instanceof ExamNotFound) {
-        console.log('Exam not found.');
         response.status(HttpStatus.NOT_FOUND).send('Exam not found.');
       } else if (error instanceof ExamAlreadySolved) {
-        console.log('Exam already solved.');
         response.status(HttpStatus.BAD_REQUEST).send('Exam already solved.');
       } else if (error instanceof TimeOut) {
-        console.log('Exam time has expired.');
         response.status(HttpStatus.BAD_REQUEST).send('Exam time has expired.');
       }
     }
