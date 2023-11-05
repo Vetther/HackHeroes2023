@@ -1,9 +1,17 @@
 import { PrismaService } from '../../prisma.service';
 import { QuestionService } from '../../question/service/question.service';
 import { Injectable } from '@nestjs/common';
-import { CreateExamDto, ResultExamDto } from '../exam.interface';
+import {
+  ExamDto,
+  ExamSecretDto,
+  ResultExamDto,
+  SolvedExamDto,
+} from '../exam.interface';
 import { v4 as uuidv4 } from 'uuid';
-import { QuestionData } from '../../question/question.interface';
+import {
+  QuestionData,
+  SolvedQuestionData, Answer
+} from '../../question/question.interface';
 import {
   ExamNotFound,
   ExamAlreadySolved,
@@ -17,10 +25,10 @@ export class ExamService {
     private question: QuestionService,
   ) {}
 
-  async createExam(exam_id: number): Promise<CreateExamDto> {
+  async createExam(exam_id: number): Promise<ExamDto> {
     const questions: QuestionData[] = await this.question.getRandomQuestions();
     // Export exam data
-    const examData: CreateExamDto = await this.createExamData(exam_id);
+    const examData: ExamDto = await this.createExamData(exam_id);
 
     // Create actual exam
     const exam = await this.prisma.actualExam.create({
@@ -122,7 +130,7 @@ export class ExamService {
     }
   }
 
-  async createExamData(exam_id: number): Promise<CreateExamDto> {
+  async createExamData(exam_id: number): Promise<ExamDto> {
     const uuid = uuidv4();
     const name = await this.getExamName(exam_id);
 
@@ -144,5 +152,80 @@ export class ExamService {
     } else {
       throw new Error(`Exam with id ${exam_id} not found`);
     }
+  }
+
+  async sendExamSolved(secret: ExamSecretDto): Promise<SolvedExamDto> {
+    const actualExam = await this.prisma.actualExam.findFirst({
+      where: {
+        secret: secret.secret,
+      },
+      select: {
+        secret: true,
+        start_time: true,
+        finish_time: true,
+        exam: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    if (!actualExam) {
+      throw new ExamNotFound();
+    }
+
+    const actualQuestions = await this.prisma.actualQuestion.findMany({
+      where: {
+        actual_exam: {
+          secret: secret.secret,
+        },
+      },
+      select: {
+        id: true,
+        answer: true,
+        question: {
+          select: {
+            content: true,
+            attachment: true,
+            answers: {
+              select: {
+                answer_a: true,
+                answer_b: true,
+                answer_c: true,
+                answer_d: true,
+                correct: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const solvedQuestions: SolvedQuestionData[] = [];
+    for (let i = 0; i < actualQuestions.length; i++) {
+      const actualQuestion = actualQuestions[i];
+      const question = actualQuestion.question;
+      const answers = question.answers[0];
+      const solvedQuestion: SolvedQuestionData = {
+        id: actualQuestion.id,
+        content: question.content,
+        attachment: question.attachment,
+        answer_a: answers.answer_a,
+        answer_b: answers.answer_b,
+        answer_c: answers.answer_c,
+        answer_d: answers.answer_d,
+        answer: actualQuestion.answer,
+        correct_answer: answers.correct,
+      };
+      solvedQuestions.push(solvedQuestion);
+    }
+
+    return {
+      name: actualExam.exam.name,
+      secret: actualExam.secret,
+      start_time: actualExam.start_time,
+      finish_time: actualExam.finish_time,
+      questions: solvedQuestions,
+    };
   }
 }

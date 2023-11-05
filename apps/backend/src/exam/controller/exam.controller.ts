@@ -1,20 +1,15 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
+  HttpException,
+  InternalServerErrorException,
   Param,
-  HttpStatus,
+  Post,
   UseFilters,
 } from '@nestjs/common';
 import { ExamService } from '../service/exam.service';
-import { CreateExamDto, ResultExamDto } from '../exam.interface';
-import {
-  ExamAlreadySolved,
-  ExamNotFound,
-  TimeOut,
-} from '../../errors/exam.errors';
-import { response } from 'express';
+import { ExamDto, ExamSecretDto, ResultExamDto, SolvedExamDto } from '../exam.interface';
 import { HttpExceptionFilter } from '../../errors/filter';
 import { ApiOperation } from '@nestjs/swagger';
 
@@ -24,7 +19,7 @@ export class ExamController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get exam by id. (e.g. ../exam/1 == INF.02)' })
-  async createExam(@Param('id') id: number): Promise<CreateExamDto> {
+  async createExam(@Param('id') id: number): Promise<ExamDto> {
     return this.examService.createExam(Number(id));
   }
 
@@ -32,14 +27,26 @@ export class ExamController {
   @UseFilters(new HttpExceptionFilter())
   async sendExamResult(@Body() resultExam: ResultExamDto): Promise<void> {
     try {
-      return this.examService.sendExamResult(resultExam);
+      await this.examService.sendExamResult(resultExam);
     } catch (error: any) {
-      if (error instanceof ExamNotFound) {
-        response.status(HttpStatus.NOT_FOUND).send('Exam not found.');
-      } else if (error instanceof ExamAlreadySolved) {
-        response.status(HttpStatus.BAD_REQUEST).send('Exam already solved.');
-      } else if (error instanceof TimeOut) {
-        response.status(HttpStatus.BAD_REQUEST).send('Exam time has expired.');
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new InternalServerErrorException(error.message);
+      }
+    }
+  }
+
+  @Post('solved')
+  @UseFilters(new HttpExceptionFilter())
+  async sendExamSolved(@Body() secret: ExamSecretDto): Promise<SolvedExamDto> {
+    try {
+      return await this.examService.sendExamSolved(secret);
+    } catch (error: any) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        console.error(error);
       }
     }
   }

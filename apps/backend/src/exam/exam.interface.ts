@@ -1,4 +1,8 @@
-import { QuestionData, ResultAnswerDto } from '../question/question.interface';
+import {
+  QuestionData,
+  ResultAnswerDto,
+  SolvedQuestionData,
+} from '../question/question.interface';
 import {
   IsNotEmpty,
   IsString,
@@ -9,7 +13,7 @@ import {
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateExamDto {
+export class ExamDto {
   @ApiProperty({
     description: 'Exam name',
     example: 'INF.02',
@@ -80,6 +84,48 @@ export class ResultExamDto {
   @Type(() => ResultAnswerDto)
   @IsArray()
   questions: ResultAnswerDto[];
+}
+
+export class ExamSecretDto {
+  @ApiProperty({
+    description: 'Exam secret',
+    example: 'e579d074-b9fe-4c9b-9af0-99507ccd4ab8',
+  })
+  @IsNotEmpty()
+  @IsString()
+  secret: string;
+}
+
+export class SolvedExamDto extends ExamDto {
+  @ApiProperty({
+    description: 'Exam finish time',
+    example: '2023-11-03T12:30:44.073Z',
+  })
+  @IsNotEmpty()
+  @IsDate()
+  finish_time: Date;
+
+  @ApiProperty({
+    type: [SolvedQuestionData],
+    description: 'Exam questions',
+    example: [
+      {
+        id: 1,
+        content: '16 + 16 = ?',
+        attachment: 'https://i.imgur.com/1.jpg',
+        answer_a: '10',
+        answer_b: '31',
+        answer_c: '64',
+        answer_d: '128',
+        answer: 'a',
+        correct_answer: 'a',
+      },
+    ],
+  })
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => SolvedQuestionData)
+  questions: SolvedQuestionData[];
 }
 
 function generateResultAnswerDto() {

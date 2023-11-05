@@ -61,6 +61,24 @@ export class QuestionData {
   answer_d: string;
 }
 
+export class SolvedQuestionData extends QuestionData {
+  @ApiProperty({
+    description: 'Question answer',
+    example: 'a',
+  })
+  @IsNotEmpty()
+  @IsString()
+  answer: Answer | string;
+
+  @ApiProperty({
+    description: 'Question correct answer',
+    example: 'a',
+  })
+  @IsNotEmpty()
+  @IsString()
+  correct_answer: Answer | string;
+}
+
 export class ResultAnswerDto {
   @ApiProperty({
     description: 'Question id',
