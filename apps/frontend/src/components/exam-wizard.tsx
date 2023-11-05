@@ -4,6 +4,7 @@ import { useMultistepForm } from "@/hooks/use-multistep-form"
 import { Exam } from "@/types"
 import { useAtom } from "jotai"
 import { useFieldArray, useFormContext } from "react-hook-form"
+import { useTimer } from "react-timer-hook"
 import { z } from "zod"
 import ExamForm from "./exam-form"
 import { examSchema, panelNextFunctionAtom } from "./exam-panel"
@@ -42,6 +43,12 @@ const ExamWizard = ({ exam }: { exam: Exam }) => {
     ))
   )
 
+  const expiryTimestamp = new Date(new Date().getTime() + 1000 * 60 * 60 - 1000) // godzina
+  const { seconds, minutes } = useTimer({
+    expiryTimestamp,
+    onExpire: () => console.warn("expired"),
+  })
+
   function onSubmit(values: z.infer<typeof examSchema>) {
     console.log(values)
   }
@@ -71,7 +78,7 @@ const ExamWizard = ({ exam }: { exam: Exam }) => {
                   Pozostały czas:{" "}
                 </span>
                 <span className="font-['DM Sans'] text-sm font-bold text-stone-700">
-                  59 minut 30 sekund
+                  {minutes} minut {seconds} sekund
                 </span>
               </div>
             </div>
