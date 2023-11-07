@@ -19,6 +19,7 @@ export default function Time({
   const hours = useCountAnimate(0, time.getUTCHours())
   const minutes = useCountAnimate(0, time.getUTCMinutes())
   const seconds = useCountAnimate(0, time.getUTCSeconds())
+  console.log(hours, minutes, seconds)
 
   const dateFormat = Intl.DateTimeFormat("pl-PL", {
     day: "2-digit",
