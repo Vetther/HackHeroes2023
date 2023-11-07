@@ -8,6 +8,16 @@ import {
   CardTagLine,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import Link from "next/link"
 
 const ExamPage = () => {
   return (
@@ -35,7 +45,27 @@ const ExamPage = () => {
             </ul>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">Wykonaj Egzamin</Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="w-full">Wykonaj Egzamin</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Czy chcesz zacząć egzamin?</DialogTitle>
+                  <DialogDescription>
+                    Po rozpoczęciu egzaminu bedziesz musiał zaznaczyć odpowiedz
+                    na 40 pytań.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Link href="/egzaminy/1" className="flex w-full">
+                    <Button type="button" className="w-full">
+                      Zacznij egzamin
+                    </Button>
+                  </Link>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </CardFooter>
         </Card>
         <Card className="h-full w-full">

@@ -1,79 +1,162 @@
-"use client";
+"use client"
 
-import { Question } from "@/types";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
 import {
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "./ui/form";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+  ControllerRenderProps,
+  FieldValues,
+  useFormContext,
+} from "react-hook-form"
+import { FormControl, FormField, FormItem } from "./ui/form"
 
 const ExamForm = ({
-    name,
-    answers,
-    index,
+  content,
+  answers,
+  questionId,
+  index,
 }: {
-    name: string;
-    answers: {
-        label: string;
-    }[];
-    index: number;
+  content: string
+  answers: {
+    answer_a: string
+    answer_b: string
+    answer_c: string
+    answer_d: string
+  }
+  questionId: number
+  index: number
 }) => {
-    const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-    const { control, getValues } = useFormContext();
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const { control, getValues, setValue } = useFormContext()
 
-    useEffect(() => {
-        setSelectedAnswer(
-            getValues(`exam.${index}.selectedAnswerId`) !== ""
-                ? getValues(`exam.${index}.selectedAnswerId`)
-                : null
-        );
-    }, []);
+  useEffect(() => {
+    let answer = null
 
-    return (
-        <div className="flex flex-col w-full gap-[22px]">
-            <div className="px-[88px] py-[74px] bg-white rounded-lg ring-1 ring-gray-100">
-                <p className="text-gray-700 text-xl font-dm-sans leading-7 text-center select-none">
-                    {name}
-                </p>
-            </div>
-            <FormField
-                control={control}
-                name={`exam.${index}.selectedAnswerId`}
-                render={({ field }) => (
-                    <FormItem className="grid grid-cols-2 gap-x-7 gap-y-[22px] space-y-0">
-                        <FormControl>
-                            <>
-                                {answers.map((answer, index) => (
-                                    <div
-                                        className={cn(
-                                            "flex justify-center items-center rounded-lg w-full px-11 py-7 bg-white ring-1 ring-gray-100 cursor-pointer select-none",
-                                            selectedAnswer === answer.label &&
-                                                "ring-2 ring-indigo-500 bg-indigo-50 transition-all duration-150"
-                                        )}
-                                        onClick={async () => {
-                                            setSelectedAnswer(answer.label);
-                                            field.onChange(answer.label);
-                                        }}
-                                        key={index}
-                                    >
-                                        <p className="text-gray-700 text-xl font-normal font-dm-sans leading-7 text-center">
-                                            {answer.label}
-                                        </p>
-                                    </div>
-                                ))}
-                            </>
-                        </FormControl>
-                    </FormItem>
-                )}
-            />
-        </div>
-    );
-};
+    if (getValues(`questions.${index}.selectedAnswer`) !== "") {
+      answer = getValues(`questions.${index}.selectedAnswer`)
+    } else if (
+      JSON.parse(localStorage.getItem("answers")!)?.at(index) !== null
+    ) {
+      if (
+        JSON.parse(localStorage.getItem("answers")!)?.at(index) !== undefined
+      ) {
+        answer = JSON.parse(localStorage.getItem("answers")!)?.at(index)?.answer
+      } else {
+        answer = null
+      }
+    }
+    setSelectedAnswer(answer)
+  }, [])
 
-export default ExamForm;
+  useEffect(() => {
+    if (selectedAnswer === null) return
+    setValue(`questions.${index}.selectedAnswer`, selectedAnswer)
+  }, [selectedAnswer])
+
+  const handleClick = async (
+    field: ControllerRenderProps<
+      FieldValues,
+      `questions.${number}.selectedAnswer`
+    >,
+    answer: string
+  ) => {
+    setSelectedAnswer(answer)
+    field.onChange(answer)
+    let answers = []
+
+    if (localStorage.getItem("answers") === null) {
+      answers.push({ content: content, answer: answer, id: questionId })
+      localStorage.setItem("answers", JSON.stringify(answers))
+    } else {
+      answers = JSON.parse(localStorage.getItem("answers")!)
+      const index = answers.findIndex(
+        (answer: { id: number }) => answer.id === questionId
+      )
+      if (index !== -1) {
+        answers[index] = { content: content, answer: answer, id: questionId }
+        localStorage.setItem("answers", JSON.stringify(answers))
+      } else {
+        localStorage.setItem(
+          "answers",
+          JSON.stringify([
+            ...answers,
+            { content: content, answer: answer, id: questionId },
+          ])
+        )
+      }
+    }
+  }
+
+  return (
+    <div className="flex w-full flex-col gap-[22px]">
+      <div className="rounded-lg bg-white px-[88px] py-[74px] ring-1 ring-gray-100">
+        <p className="select-none text-center font-dm-sans text-xl leading-7 text-gray-700">
+          {content}
+        </p>
+      </div>
+      <FormField
+        control={control}
+        name={`questions.${index}.selectedAnswer`}
+        render={({ field, fieldState }) => (
+          <FormItem className="grid grid-cols-2 gap-x-7 gap-y-[22px] space-y-0">
+            <FormControl>
+              <>
+                <div
+                  className={cn(
+                    "flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-white px-11 py-7 ring-1 ring-gray-100",
+                    fieldState.isTouched &&
+                      "bg-red-50 ring-2 ring-red-500 transition-all duration-150",
+                    selectedAnswer === "a" &&
+                      "bg-indigo-50 ring-2 ring-indigo-500 transition-all duration-150"
+                  )}
+                  onClick={() => handleClick(field, "a")}
+                >
+                  <p className="text-center font-dm-sans text-xl font-normal leading-7 text-gray-700">
+                    {answers.answer_a}
+                  </p>
+                </div>
+                <div
+                  className={cn(
+                    "flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-white px-11 py-7 ring-1 ring-gray-100",
+                    selectedAnswer === "b" &&
+                      "bg-indigo-50 ring-2 ring-indigo-500 transition-all duration-150"
+                  )}
+                  onClick={() => handleClick(field, "b")}
+                >
+                  <p className="text-center font-dm-sans text-xl font-normal leading-7 text-gray-700">
+                    {answers.answer_b}
+                  </p>
+                </div>
+                <div
+                  className={cn(
+                    "flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-white px-11 py-7 ring-1 ring-gray-100",
+                    selectedAnswer === "c" &&
+                      "bg-indigo-50 ring-2 ring-indigo-500 transition-all duration-150"
+                  )}
+                  onClick={() => handleClick(field, "c")}
+                >
+                  <p className="text-center font-dm-sans text-xl font-normal leading-7 text-gray-700">
+                    {answers.answer_c}
+                  </p>
+                </div>
+                <div
+                  className={cn(
+                    "flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-white px-11 py-7 ring-1 ring-gray-100",
+                    selectedAnswer === "d" &&
+                      "bg-indigo-50 ring-2 ring-indigo-500 transition-all duration-150"
+                  )}
+                  onClick={() => handleClick(field, "d")}
+                >
+                  <p className="text-center font-dm-sans text-xl font-normal leading-7 text-gray-700">
+                    {answers.answer_d}
+                  </p>
+                </div>
+              </>
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    </div>
+  )
+}
+
+export default ExamForm

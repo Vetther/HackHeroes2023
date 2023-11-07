@@ -1,87 +1,71 @@
-import ExamPanel, { ExamProvider } from "@/components/exam-panel";
-import { Exam } from "@/types";
+"use client"
+
+import ExamPanel, { ExamProvider } from "@/components/exam-panel"
+import { Exam } from "@/types"
+import axios from "axios"
+import { useAtom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
+import { Loader2 } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { useQuery } from "react-query"
+
+const examAtom = atomWithStorage<Exam | null>("exam", null)
 
 const ExamPage = ({ params }: { params: { id: string } }) => {
-    const examData: Exam = [
-        {
-            name: "123Wskaż kwerendę, która z tabeli klienci wybierze jedynie nazwiska trzech najlepszych klientów, czyli takich, którzy na swoim koncie mają najwięcej punktów (pole całkowite punkty).",
-            answers: [
-                { label: "1SELECT nazwisko FROM klienci LIMIT 9;" },
-                { label: "1SELECT nazwisko FROM klienci LIMIT 3;" },
-                { label: "1SELECT nazwisko FROM klienci LIMIT 6;" },
-                { label: "1SELECT nazwisko FROM klienci LIMIT 1;" },
-            ],
-        },
-        {
-            name: "312Wskaż kwerendę, która z tabeli klienci wybierze jedynie nazwiska trzech najlepszych klientów, czyli takich, którzy na swoim koncie mają najwięcej punktów (pole całkowite punkty).",
-            answers: [
-                { label: "2SELECT nazwisko FROM klienci LIMIT 9;" },
-                { label: "2SELECT nazwisko FROM klienci LIMIT 3;" },
-                { label: "2SELECT nazwisko FROM klienci LIMIT 6;" },
-                { label: "2SELECT nazwisko FROM klienci LIMIT 1;" },
-            ],
-        },
-        {
-            name: "Jak stworzyć zmienną w języku Python i przypisać jej wartość 42?",
-            answers: [
-                { label: "my_variable = 42" },
-                { label: "int my_variable = 42" },
-                { label: "my_variable: int = 42" },
-                { label: "my_variable = '42'" },
-            ],
-        },
-        {
-            name: "Co to jest pętla 'for' w programowaniu i jakie są jej podstawowe zastosowania?",
-            answers: [
-                {
-                    label: "Pętla 'for' służy do iteracji po kolekcjach, takich jak listy lub krotki, i wykonuje określony blok kodu dla każdego elementu w kolekcji.",
-                },
-                {
-                    label: "Pętla 'for' jest używana do tworzenia funkcji w języku Python.",
-                },
-                { label: "Pętla 'for' jest tylko dostępna w języku Java." },
-                {
-                    label: "Pętla 'for' służy do tworzenia warunków logicznych w języku C++.",
-                },
-            ],
-        },
-        {
-            name: "Jakie są różnice między językiem Java a językiem JavaScript?",
-            answers: [
-                {
-                    label: "Java jest językiem programowania o obiektowym charakterze, podczas gdy JavaScript jest językiem skryptowym.",
-                },
-                {
-                    label: "Java jest używana tylko do tworzenia aplikacji webowych, a JavaScript jest używany tylko do tworzenia aplikacji mobilnych.",
-                },
-                {
-                    label: "Java i JavaScript to tożsame języki programowania bez różnic.",
-                },
-                {
-                    label: "JavaScript jest kompilowany, a Java jest interpretowana.",
-                },
-            ],
-        },
-        {
-            name: "Co oznacza termin 'API' w kontekście programowania?",
-            answers: [
-                {
-                    label: "API to skrót od 'Application Programming Interface' i jest to zestaw reguł i protokołów, które umożliwiają jednym programom komunikację z innymi programami.",
-                },
-                {
-                    label: "API to język programowania używany do tworzenia aplikacji.",
-                },
-                { label: "API to narzędzie do debugowania kodu źródłowego." },
-                { label: "API to rodzaj bazy danych." },
-            ],
-        },
-    ];
+  const [exam, setExam] = useAtom(examAtom)
+  const router = useRouter()
 
-    return (
-        <ExamProvider exam={examData}>
-            <ExamPanel exam={examData} />
+  const { isLoading, isError, data, error, refetch } = useQuery(
+    "exam",
+    () =>
+      axios
+        .get(`http://localhost:3000/api/v1/exam/${params.id}`)
+        .then((res) => res.data),
+    { refetchOnWindowFocus: false, enabled: false }
+  )
+
+  useEffect(() => {
+    if (localStorage.getItem("secret")) {
+      const secret = JSON.parse(localStorage.getItem("secret")!).find(
+        (item: { id: string }) => item.id === params.id
+      )
+      console.log(secret)
+      if (secret) {
+        router.push(`/egzaminy/${params.id}/wynik`)
+      }
+    }
+    if (localStorage.getItem("exam")) {
+      console.log("localstorage")
+    } else {
+      console.log("refetch")
+      refetch()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (data) {
+      setExam(data)
+      localStorage.setItem(
+        "secret",
+        JSON.stringify([{ id: params.id, secret: data.secret }])
+      )
+    }
+  }, [data])
+
+  return isLoading ? (
+    <div className="flex h-full  w-full items-center justify-center">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  ) : (
+    <div>
+      {exam && (
+        <ExamProvider exam={exam}>
+          <ExamPanel exam={exam} />
         </ExamProvider>
-    );
-};
+      )}
+    </div>
+  )
+}
 
-export default ExamPage;
+export default ExamPage
