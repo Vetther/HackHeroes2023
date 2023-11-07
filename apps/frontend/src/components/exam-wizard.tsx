@@ -82,6 +82,13 @@ const ExamWizard = ({ exam }: { exam: Exam }) => {
         localStorage.removeItem("answers")
         console.log(response)
 
+        const secret = JSON.parse(localStorage.getItem("secret")!).find(
+          ({ secret }: { secret: any }) => secret === exam.secret
+        )!
+        secret.solved = true
+
+        console.log(secret)
+
         const id = JSON.parse(localStorage.getItem("secret")!).find(
           ({ secret }: { secret: any }) => secret === exam.secret
         )!.id

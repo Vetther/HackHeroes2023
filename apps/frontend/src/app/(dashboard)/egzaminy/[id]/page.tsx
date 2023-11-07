@@ -30,9 +30,9 @@ const ExamPage = ({ params }: { params: { id: string } }) => {
       const secret = JSON.parse(localStorage.getItem("secret")!).find(
         (item: { id: string }) => item.id === params.id
       )
-      console.log(secret)
+      console.log(secret.result)
       if (secret) {
-        router.push(`/egzaminy/${params.id}/wynik`)
+        return router.push(`/egzaminy/${params.id}/wynik`)
       }
     }
     if (localStorage.getItem("exam")) {
