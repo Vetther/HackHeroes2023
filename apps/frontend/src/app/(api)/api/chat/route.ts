@@ -1,21 +1,29 @@
 import { OpenAIStream, StreamingTextResponse } from "ai"
-import { Configuration, OpenAIApi } from "openai-edge"
+import OpenAI from "openai"
 
-const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY!,
 })
-
-const openai = new OpenAIApi(config)
-
 export const runtime = "edge"
 
-export async function POST() {
-  const response = await openai.createChatCompletion({
+export async function POST(req: Request) {
+  // Extract the `prompt` from the body of the request
+  const { prompt } = await req.json()
+
+  // Request the OpenAI API for the response based on the prompt
+  const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: "Say Hello World!" }],
     stream: true,
+    messages: [
+      {
+        role: "user",
+        content: `Z danych pytań stwórz raport w którym napiszesz mi jakie zagadnienia i kategorie mam poworzyć, nie uzywaj treści pytan, pytania: ${prompt}`,
+      },
+    ],
+    max_tokens: 400,
   })
 
   const stream = OpenAIStream(response)
+
   return new StreamingTextResponse(stream)
 }

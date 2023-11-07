@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils"
+import { useAtom } from "jotai"
+import { dataAtom } from "."
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Card, CardTagLine } from "../ui/card"
 import { Skeleton } from "../ui/skeleton"
@@ -6,10 +8,12 @@ import { Skeleton } from "../ui/skeleton"
 export default function Profile({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const [resultData, setResultData] = useAtom(dataAtom)
+
   return (
     <Card
       className={cn(
-        "flex-row flex-wrap-reverse items-center justify-center gap-2.5 md:flex-nowrap",
+        "flex-row flex-wrap-reverse items-start justify-center gap-2.5 md:flex-nowrap",
         className
       )}
     >
@@ -18,23 +22,27 @@ export default function Profile({
         <ul className="whitespace-nowrap">
           <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Imię: </span>
-            <span className="font-bold text-gray-700">User</span>
+            <span className="font-bold text-gray-700">Michał</span>
           </li>
           <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Nazwisko: </span>
-            <span className="font-bold text-gray-700">Anonymous</span>
+            <span className="font-bold text-gray-700">Kowalski</span>
           </li>
           <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Adres email: </span>
-            <span className="font-bold text-gray-700">email@email.email</span>
+            <span className="font-bold text-gray-700">
+              michal.kowalski@szkola.edu.pl
+            </span>
           </li>
           <li className="text-sm leading-relaxed">
             <span className="font-medium text-gray-700">Szkoła: </span>
             <span className="font-bold text-gray-700">Szkoła</span>
           </li>
           <li className="text-sm leading-relaxed">
-            <span className="font-medium text-gray-700">Indentyfikator: </span>
-            <span className="font-bold text-gray-700">1234567890</span>
+            <span className="font-medium text-gray-700">Identyfikator: </span>
+            <span className="font-bold text-gray-700">
+              {resultData?.secret}
+            </span>
           </li>
         </ul>
       </div>

@@ -17,7 +17,7 @@ const Sidebar = () => {
       <aside className="static z-10 hidden h-screen w-full max-w-[275px] flex-col border-r border-gray-100 bg-white lg:flex">
         <div className="mt-7 flex justify-center pb-[15px]">
           <p className="font-dm-sans text-[15px] font-bold leading-snug text-gray-700">
-            Egzaminy
+            ExaME
           </p>
         </div>
         <SidebarNavigation />

@@ -20,7 +20,7 @@ const ExamPage = ({ params }: { params: { id: string } }) => {
     "exam",
     () =>
       axios
-        .get(`http://localhost:3000/api/v1/exam/${params.id}`)
+        .get(`http://130.61.191.69:3000/api/v1/exam/${params.id}`)
         .then((res) => res.data),
     { refetchOnWindowFocus: false, enabled: false }
   )

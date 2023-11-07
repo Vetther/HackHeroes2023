@@ -25,6 +25,7 @@
     "jotai": "^2.5.0",
     "lucide-react": "^0.290.0",
     "next": "14.0.0",
+    "openai": "^4.16.1",
     "openai-edge": "^1.2.2",
     "react": "^18",
     "react-dom": "^18",

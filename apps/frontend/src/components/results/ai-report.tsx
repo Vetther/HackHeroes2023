@@ -1,9 +1,53 @@
 import { cn } from "@/lib/utils"
+import { useCompletion } from "ai/react"
+import { useAtom } from "jotai"
+import { Loader2 } from "lucide-react"
+import { useCallback, useEffect, useState } from "react"
+import { dataAtom } from "."
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
 export default function AIRaport({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const [resultData, setResultData] = useAtom(dataAtom)
+  const [raport, setRaport] = useState<string>("")
+  const { complete, isLoading } = useCompletion({
+    api: "/api/chat",
+  })
+
+  const sendRaport = useCallback(
+    async (c: string) => {
+      const completion = await complete(c)
+      setRaport(completion!)
+    },
+    [complete]
+  )
+
+  useEffect(() => {
+    if (!resultData) return
+    console.log(resultData?.questions)
+    const prompt = resultData?.questions.map((question: any, index: number) => {
+      if (
+        question.answer.toLowerCase() !== question.correct_answer.toLowerCase()
+      ) {
+        return {
+          question: question.content,
+          index: index,
+        }
+      } else {
+        return null
+      }
+    })
+
+    const promptString = prompt
+      .filter((p: any) => p !== null)
+      .map((p: { index: any; question: any; answer: any }) => {
+        return `${p?.question}`
+      })
+
+    sendRaport(promptString)
+  }, [resultData])
+
   return (
     <Card
       className={cn(
@@ -15,15 +59,12 @@ export default function AIRaport({
         <CardTitle className="text-center">Raport AI</CardTitle>
       </CardHeader>
       <CardContent className="text-center text-sm leading-[21px] text-slate-500">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa, optio!
-        Ipsam minima eos fugit deleniti distinctio ducimus, neque autem quisquam
-        suscipit labore. Voluptates animi sapiente inventore? At delectus sint
-        consequatur fugiat facere eum aperiam ab blanditiis dolores eligendi.
-        Odio, et ullam dolore debitis perferendis commodi maxime quod iste
-        maiores non nam reiciendis voluptatibus perspiciatis incidunt delectus
-        consequuntur aspernatur? Quaerat sint voluptatem reprehenderit quisquam,
-        veritatis nesciunt, neque fuga et illo alias blanditiis vel,
-        perspiciatis laudantium quod!
+        {isLoading && (
+          <div className="flex h-full  w-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        )}
+        <div>{raport}</div>
       </CardContent>
     </Card>
   )

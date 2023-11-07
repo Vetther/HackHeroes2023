@@ -36,21 +36,6 @@ export function useSidebar() {
       ),
       active: pathname === "/bazawiedzy",
     },
-    {
-      label: "Tabela wyników",
-      path: "/tabela-wynikow",
-      icon: (
-        <SidebarIcons.scoreboard
-          className={cn(
-            "transition-colors duration-150",
-            pathname === "/tabela-wynikow"
-              ? "text-white"
-              : "text-slate-500 group-hover:text-indigo-500"
-          )}
-        />
-      ),
-      active: pathname === "/tabela-wynikow",
-    },
   ]
 
   const account = {
