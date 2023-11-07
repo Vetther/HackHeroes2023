@@ -31,9 +31,27 @@ import { TimePicker } from "../ui/time-picker"
 
 const data = [
   {
-    startTime: "2023-10-31 11:54:43.024",
-    finishTime: "2023-10-31 12:13:35.492",
-    text: "Zapisy na:\n XIII Mistrzostwa Mechaników",
+    startTime: "2023-11-11 11:54:43.024",
+    finishTime: "2023-11-11 12:13:35.492",
+    text: "Egzamin z przedmiotu INF.02 (sprzęt, systemy i sieci komputerowe)",
+    color: "",
+  },
+  {
+    startTime: "2023-11-14 11:54:43.024",
+    finishTime: "2023-11-14 12:13:35.492",
+    text: "Egzamin z przedmiotu EE.08",
+    color: "",
+  },
+  {
+    startTime: "2023-11-22 11:54:43.024",
+    finishTime: "2023-11-22 12:13:35.492",
+    text: "Egzamin z Anatomii",
+    color: "",
+  },
+  {
+    startTime: "2023-11-23 11:54:43.024",
+    finishTime: "2023-11-23 12:13:35.492",
+    text: "Egzamin z Farmakologii",
     color: "",
   },
 ]

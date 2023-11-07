@@ -41,7 +41,7 @@ export default function Chart({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <Card className={cn("h-full", className)}>
-      <CardTitle>Czas udzielenia odpowiedzi / pytanie</CardTitle>
+      <CardTitle>Czas udzielenia odpowiedzi / pytanie (preview)</CardTitle>
       <CardContent className="h-80 xl:h-64 2xl:h-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart

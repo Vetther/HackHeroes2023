@@ -1,3 +1,16 @@
-const Home = () => <div>Home</div>;
+"use client"
 
-export default Home;
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+
+const Home = () => {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push("/egzaminy")
+  }, [])
+
+  return <div>Home</div>
+}
+
+export default Home

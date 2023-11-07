@@ -20,7 +20,7 @@ const ExamPage = ({ params }: { params: { id: string } }) => {
     "exam",
     () =>
       axios
-        .get(`http://localhost:3000/api/v1/exam/${params.id}`)
+        .get(`http://130.61.191.69:3000/api/v1/exam/${params.id}`)
         .then((res) => res.data),
     { refetchOnWindowFocus: false, enabled: false }
   )
@@ -30,9 +30,9 @@ const ExamPage = ({ params }: { params: { id: string } }) => {
       const secret = JSON.parse(localStorage.getItem("secret")!).find(
         (item: { id: string }) => item.id === params.id
       )
-      console.log(secret)
+      console.log(secret.result)
       if (secret) {
-        router.push(`/egzaminy/${params.id}/wynik`)
+        return router.push(`/egzaminy/${params.id}/wynik`)
       }
     }
     if (localStorage.getItem("exam")) {
