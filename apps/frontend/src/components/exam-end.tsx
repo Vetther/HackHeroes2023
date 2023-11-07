@@ -23,7 +23,7 @@ const ExamEnd = () => {
     }
 
     axios
-      .post("http://localhost:3000/api/v1/exam", data)
+      .post("http://130.61.191.69:3000/api/v1/exam", data)
       .then(function (response) {
         localStorage.removeItem("exam")
         localStorage.removeItem("answers")
